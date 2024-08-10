@@ -1,10 +1,32 @@
 <template>
   <div>
-    <h1>Product Page</h1>
+    <div id="page-wrap">
+      <div class="grid-wrap">
+        <!-- jika memanfaatkan index dari perulangan -->
+        <!-- <div v-for="(product,index) in products" :key="product.id" class="product-item"> -->
+        <div v-for="product in products" :key="product.id" class="product-item">
+          <img :src="product.imageUrl" alt="" />
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-price">{{ product.price }}</p>
+          <router-link :to="{ name: 'productDetail', params: { id: product.id } }">
+            <button>Detail</button>
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-export default {};
+// import variabel product yang ada didalam file data-seed.js
+import { products } from "@/data-seed";
+export default {
+  data() {
+    return {
+      products,
+      // products: products,
+    };
+  },
+};
 </script>
 
 <!-- scoped artinya style ini hanya bisa digunakan pada komponen index ini dan jika ada komponen yang kita panggil didalam index tersebut maka styling nya akan tidak bekerja -->
