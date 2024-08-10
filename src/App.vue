@@ -1,32 +1,34 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <!-- menggunakan route name -->
+    <nav><router-link :to="{ name: 'product' }">Product</router-link> | <router-link to="/product/">Home</router-link> |</nav>
+    <nav><router-link :to="{ name: 'productDetail', params: { id: 22 } }">Detail Product</router-link> | <router-link to="/product/">Home</router-link> |</nav>
+    <nav><router-link :to="{ name: 'cart' }">Cart</router-link> | <router-link to="/product/">Home</router-link> |</nav>
+    <router-view />
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  box-sizing: border-box;
+  font-family: Arial;
 }
 
-nav {
-  padding: 30px;
+#page-wrap {
+  margin: auto;
+  max-width: 800px;
+  min-height: 100vh;
 }
 
-nav a {
+button {
+  background-color: #41b883;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  outline: 0;
+  padding: 16px;
 }
 </style>
