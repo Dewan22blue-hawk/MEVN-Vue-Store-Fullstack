@@ -1,12 +1,22 @@
 <template>
   <div id="app">
     <!-- menggunakan route name -->
-    <nav><router-link :to="{ name: 'product' }">Product</router-link> | <router-link to="/product/">Home</router-link> |</nav>
+    <!-- <nav><router-link :to="{ name: 'product' }">Product</router-link> | <router-link to="/product/">Home</router-link> |</nav>
     <nav><router-link :to="{ name: 'productDetail', params: { id: 22 } }">Detail Product</router-link> | <router-link to="/product/">Home</router-link> |</nav>
-    <nav><router-link :to="{ name: 'cart' }">Cart</router-link> | <router-link to="/product/">Home</router-link> |</nav>
+    <nav><router-link :to="{ name: 'cart' }">Cart</router-link> | <router-link to="/product/">Home</router-link> |</nav> -->
+    <appNavbar />
     <router-view />
   </div>
 </template>
+
+<script>
+import appNavbar from "./components/Navbar.vue";
+export default {
+  components: {
+    appNavbar,
+  },
+};
+</script>
 
 <style>
 * {

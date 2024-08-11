@@ -1,19 +1,22 @@
 <template>
-  <div>
-    <h1>Product Page</h1>
+  <!-- v-for="product in products" :key="product.id" -->
+  <div class="product-item">
+    <img :src="product.imageUrl" alt="" />
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-price">{{ product.price }}</p>
+    <router-link :to="{ name: 'productDetail', params: { id: product.id } }">
+      <button>Detail</button>
+    </router-link>
   </div>
 </template>
-<script>
-export default {};
-</script>
-<style scoped>
-.grid-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 16px;
-}
 
+<script>
+export default {
+  props: ["product"],
+};
+</script>
+
+<style scoped>
 .product-item {
   align-items: center;
   border-radius: 8px;

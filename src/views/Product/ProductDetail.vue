@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <div id="page-wrap">
+    <div id="page-wrap" v-if="product">
       <div id="img-wrap">
         <img :src="product.imageUrl" alt="" />
       </div>
@@ -12,18 +12,24 @@
         <button id="add-to-cart">Add to cart</button>
       </div>
     </div>
+    <NotFound v-else />
   </div>
 </template>
 <script>
 // Mengimpor data produk dari file data-seed yang ada di folder src
 import { products } from "@/data-seed";
+import NotFound from "../Errors/NotFound.vue";
 
 export default {
   // Fungsi data yang mengembalikan objek yang berisi data untuk komponen ini
+  components: {
+    NotFound,
+  },
   data() {
     return {
       // Menyimpan data produk yang diimpor dalam state komponen
       products,
+      // NotFound,
     };
   },
   // computed = fungsi untuk mengubah suatu data yang sudah ada ke dalam format baru/ke dalam format yang kita inginkan

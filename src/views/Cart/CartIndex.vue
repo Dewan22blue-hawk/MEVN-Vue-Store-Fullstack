@@ -7,22 +7,7 @@
       <h1>Shopping Cart</h1>
 
       <!-- Melakukan loop untuk setiap item dalam cartItems dan membuat kontainer produk -->
-      <div class="product-container" v-for="item in cartItems" :key="item.id">
-        <!-- Menampilkan gambar produk -->
-        <img class="product-image" :src="item.imageUrl" alt="" />
-
-        <!-- Pembungkus untuk detail produk seperti nama dan harga -->
-        <div class="details-wrap">
-          <!-- Menampilkan nama produk -->
-          <h3>{{ item.name }}</h3>
-          <!-- Menampilkan harga produk -->
-          <p>{{ item.price }}</p>
-        </div>
-
-        <!-- Tombol untuk menghapus produk dari keranjang -->
-        <button class="remove-button">Remove</button>
-      </div>
-
+      <ItemCart v-for="item in cartItems" :key="item.id" :item="item" />
       <!-- Menampilkan total harga dari semua item dalam keranjang -->
       <h3 id="total-price">Total price: {{ totalPrice }}</h3>
 
@@ -35,9 +20,11 @@
 <script>
 // Mengimpor data cartItems dari file 'data-seed'
 import { cartItems } from "@/data-seed";
+import ItemCart from "@/components/ItemCart.vue";
 
 export default {
   // Data yang digunakan dalam komponen ini
+  components: { ItemCart },
   data() {
     return {
       // cartItems berisi array item yang ada di keranjang
@@ -72,27 +59,4 @@ h1 {
   width: 100%;
 }
 /* Gaya untuk kontainer produk */
-.product-container {
-  align-content: "center";
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  padding: 16px;
-  width: 100%;
-}
-/* Gaya untuk gambar produk */
-.product-image {
-  flex: 1;
-  height: 100px;
-  max-width: 100px;
-}
-/* Gaya untuk detail produk */
-.details-wrap {
-  padding: 0 16px;
-  flex: 3;
-}
-/* Gaya untuk tombol hapus */
-.remove-button {
-  flex: 1;
-  margin: auto;
-}
 </style>
