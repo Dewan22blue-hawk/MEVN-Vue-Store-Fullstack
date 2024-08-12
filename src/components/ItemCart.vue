@@ -1,7 +1,7 @@
 <template>
   <div class="product-container">
     <!-- Menampilkan gambar produk -->
-    <img class="product-image" :src="item.imageUrl" alt="" />
+    <img class="product-image" :src="`http://localhost:8000${item.imageUrl}`" alt="" />
 
     <!-- Pembungkus untuk detail produk seperti nama dan harga -->
     <div class="details-wrap">

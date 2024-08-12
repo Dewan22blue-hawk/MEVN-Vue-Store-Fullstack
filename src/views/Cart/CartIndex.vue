@@ -19,7 +19,8 @@
 
 <script>
 // Mengimpor data cartItems dari file 'data-seed'
-import { cartItems } from "@/data-seed";
+// import { cartItems } from "@/data-seed";
+import axios from "axios";
 import ItemCart from "@/components/ItemCart.vue";
 
 export default {
@@ -28,7 +29,8 @@ export default {
   data() {
     return {
       // cartItems berisi array item yang ada di keranjang
-      cartItems,
+      // cartItems,
+      cartItems: [],
     };
   },
   // Bagian computed untuk menghitung total harga
@@ -37,6 +39,26 @@ export default {
       // Menghitung total harga dengan menjumlahkan harga setiap item di cartItems
       return this.cartItems.reduce((sumCart, item) => sumCart + Number(item.price), 0).toFixed(2);
     },
+  },
+  // Fungsi yang dipanggil ketika komponen ini dijalankan
+  async created() {
+    // Mengambil data cartItems dari server menggunakan axios
+    const result = await axios.get("http://localhost:8000/api/orders/user/1");
+    // Menunggu respons dari server dan menyimpan hasilnya dalam variabel `result`
+
+    // karena response nya array maka kita lakukan object assign
+    let data = Object.assign(
+      {},
+      ...result.data.map((result) => ({
+        cart_items: result.products,
+      }))
+    );
+    // Mengubah data dari array ke objek dengan properti `cart_items` berisi produk
+    // Ini mungkin perlu jika format data dari server tidak langsung sesuai
+
+    // this.cartItems = result.data;
+    this.cartItems = data.cart_items;
+    // Mengupdate `cartItems` di komponen dengan data produk yang diperoleh
   },
 };
 </script>
