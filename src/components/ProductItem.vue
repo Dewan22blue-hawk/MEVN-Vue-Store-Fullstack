@@ -7,7 +7,8 @@ http://localhost:8000: Base URL server tempat gambar disimpan. Menggabungkannya 
     <img :src="`http://localhost:8000${product.imageUrl}`" alt="" />
     <h3 class="product-name">{{ product.name }}</h3>
     <p class="product-price">{{ product.price }}</p>
-    <router-link :to="{ name: 'productDetail', params: { id: product.id } }">
+    <!-- jadi sekarang yang dikirim di params nya bukan id namun code dari product yang dikirim dari vuestore server -->
+    <router-link :to="{ name: 'productDetail', params: { id: product.code } }">
       <button>Detail</button>
     </router-link>
   </div>
