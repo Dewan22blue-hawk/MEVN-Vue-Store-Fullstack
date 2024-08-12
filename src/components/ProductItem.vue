@@ -1,7 +1,10 @@
 <template>
   <!-- v-for="product in products" :key="product.id" -->
   <div class="product-item">
-    <img :src="product.imageUrl" alt="" />
+    <!-- :src: Binding directive di Vue.js yang mengikat atribut src dari elemen <img>.
+`http://localhost:8000${product.imageUrl}`: Template literal (backticks) digunakan untuk menyusun string URL gambar. product.imageUrl adalah property yang menyimpan URL gambar relatif dari produk.
+http://localhost:8000: Base URL server tempat gambar disimpan. Menggabungkannya dengan product.imageUrl membentuk URL lengkap ke gambar. -->
+    <img :src="`http://localhost:8000${product.imageUrl}`" alt="" />
     <h3 class="product-name">{{ product.name }}</h3>
     <p class="product-price">{{ product.price }}</p>
     <router-link :to="{ name: 'productDetail', params: { id: product.id } }">
