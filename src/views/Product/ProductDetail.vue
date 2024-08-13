@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     <div id="page-wrap" v-if="product">
+      <h4 v-if="notif" class="notif">Item Added Successfully!</h4>
       <div id="img-wrap">
         <img :src="`http://localhost:8000${product.imageUrl}`" alt="" />
       </div>
@@ -9,7 +10,7 @@
         <p>{{ product.description }}</p>
         <p id="price">Rp. {{ product.price }}</p>
         <p id="">Average Rating: {{ product.averageRating }}</p>
-        <button id="add-to-cart">Add to cart</button>
+        <button @click="addToCart(product.code)" id="add-to-cart">Add to cart</button>
       </div>
     </div>
     <NotFound v-else />
@@ -30,9 +31,22 @@ export default {
     return {
       // Menyimpan data produk yang diimpor dalam state komponen
       product: {},
+
       // products,
+      notif: false,
       // NotFound,
     };
+  },
+  methods: {
+    async addToCart(product) {
+      if (this.isAddingToCart) return; // Jika sudah dalam proses, return
+      this.isAddingToCart = true; // Set jadi true saat proses berlangsung
+      await axios.post("http://localhost:8000/api/orders/user/1/add", {
+        product: product,
+      });
+      this.notif = true;
+      this.isAddingToCart = false; // Kembalikan ke false setelah proses selesai
+    },
   },
   // computed = fungsi untuk mengubah suatu data yang sudah ada ke dalam format baru/ke dalam format yang kita inginkan
   // Bagian computed untuk mendefinisikan properti yang dihitung secara reaktif
@@ -101,5 +115,13 @@ img {
   position: absolute;
   top: 24px;
   right: 16px;
+}
+
+.notif {
+  text-align: center;
+  color: white;
+  background-color: #41b883;
+  padding: 3%;
+  border-radius: 8px;
 }
 </style>
