@@ -12,7 +12,9 @@
     </div>
 
     <!-- Tombol untuk menghapus produk dari keranjang -->
-    <button class="remove-button">Remove</button>
+    <button class="remove-button" @click="$emit('remove-item', item.code)">Remove</button>
+    <!-- $emit('remove-item', item.code) digunakan untuk memancarkan event 'remove-item' dari komponen child ke komponen parent yakni pada case ini adalah 'CartIndex.vue'.
+Komponen parent kemudian bisa menangkap event ini dan menjalankan metode yang sesuai (misalnya, menghapus item dari daftar) menggunakan data item.code yang dipancarkan. -->
   </div>
 </template>
 

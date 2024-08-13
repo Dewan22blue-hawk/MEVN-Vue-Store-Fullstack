@@ -7,7 +7,10 @@
       <h1>Shopping Cart</h1>
 
       <!-- Melakukan loop untuk setiap item dalam cartItems dan membuat kontainer produk -->
-      <ItemCart v-for="item in cartItems" :key="item.id" :item="item" />
+      <!-- $event ini akan menangkap nilai dari parameter kedua yang ada didalam emit pada case ini adalah item.code -->
+      <ItemCart v-for="item in cartItems" :key="item.id" :item="item" v-on:remove-item="removeFromCart($event)" />
+      <!-- v-on:remove-item: Ini mendengarkan event custom bernama 'remove-item' yang dipancarkan (emit) dari dalam komponen child ItemCart.
+removeFromCart($event): Ketika event 'remove-item' dipancarkan dari komponen ItemCart, methode removeFromCart akan dipanggil jadi kita buat methodsnya di script. ($event) adalah data yang dipancarkan bersama event, dalam hal ini biasanya berupa item.code atau identifikasi item lainnya yang ingin dihapus. -->
       <!-- Menampilkan total harga dari semua item dalam keranjang -->
       <h3 id="total-price">Total price: {{ totalPrice }}</h3>
 
@@ -33,6 +36,31 @@ export default {
       cartItems: [],
     };
   },
+  methods: {
+    // Metode removeFromCart yang dijalankan secara asinkron
+    async removeFromCart(product) {
+      // Mengirim permintaan HTTP DELETE ke server untuk menghapus item dari keranjang belanja berdasarkan produk yang diberikan
+      await axios
+        .delete(`http://localhost:8000/api/orders/user/1/product/${product}`)
+        // Jika terjadi kesalahan, menangkapnya dan mencetak pesan kesalahan ke konsol
+        .catch((err) => console.log(err));
+
+      // Mencari indeks item yang akan dihapus dari cartItems berdasarkan kode produk
+      let indexCart = this.cartItems
+        // Mendeklarasikan variabel indexCart yang akan digunakan untuk menyimpan indeks dari item yang akan dihapus dalam array cartItems.
+        // Menggunakan metode map pada cartItems untuk membuat array baru yang hanya berisi kode produk (item.code) dari setiap item dalam keranjang.
+        .map(function (item) {
+          return item.code;
+        })
+        // Menggunakan indexOf untuk menemukan indeks dari produk dalam array kode produk yang sesuai dengan parameter product. Indeks ini menunjukkan posisi item dalam array cartItems yang ingin dihapus.
+        .indexOf(product);
+
+      // Menghapus item dari array cartItems di posisi yang ditemukan
+      // Menggunakan metode splice untuk menghapus satu item dari array cartItems pada posisi indexCart, yaitu item yang memiliki kode produk yang sesuai dengan yang ingin dihapus.
+      this.cartItems.splice(indexCart, 1);
+    },
+  },
+
   // Bagian computed untuk menghitung total harga
   computed: {
     totalPrice() {
